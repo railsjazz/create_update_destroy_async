@@ -31,4 +31,33 @@ class CreateUpdateDestroyAsyncTest < ActiveJob::TestCase
     end
     assert_equal 1, Project.count
   end
+
+  test "job name" do
+    # Clear the enqueued jobs before testing
+    ActiveJob::Base.queue_adapter.enqueued_jobs.clear
+
+    User.create_async
+
+    # Check if the job was enqueued
+    assert_enqueued_jobs 1
+
+    # Check the job name
+    enqueued_job = ActiveJob::Base.queue_adapter.enqueued_jobs.first
+    assert_equal 'CreateUpdateDestroyAsync::Jobs::Create', enqueued_job[:job].to_s
+  end
+
+  test "job name and args" do
+    # Clear the enqueued jobs before testing
+    ActiveJob::Base.queue_adapter.enqueued_jobs.clear
+
+    User.create_async(name: "John Doe")
+
+    # Check if the job was enqueued
+    assert_enqueued_jobs 1
+
+    # Check the job name
+    enqueued_job = ActiveJob::Base.queue_adapter.enqueued_jobs.first
+    assert_equal 'CreateUpdateDestroyAsync::Jobs::Create', enqueued_job[:job].to_s
+    assert_equal(["User", {"name"=>"John Doe", "_aj_symbol_keys"=>["name"]}], enqueued_job[:args])
+  end
 end
