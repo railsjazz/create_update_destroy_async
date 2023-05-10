@@ -3,7 +3,7 @@ module CreateUpdateDestroyAsync
     extend ActiveSupport::Concern
 
     class_methods do
-      def create_async(attributes)
+      def create_async(attributes = {})
         CreateUpdateDestroyAsync::Jobs::Create.perform_later(self.name, attributes)
       end
     end

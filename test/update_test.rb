@@ -1,6 +1,10 @@
 require "test_helper"
 
 class UpdateTest < ActiveJob::TestCase
+  setup do
+    User.destroy_all
+  end
+
   test "update_async 1" do
     user = User.create(name: "John Doe")
     assert_enqueued_jobs 0

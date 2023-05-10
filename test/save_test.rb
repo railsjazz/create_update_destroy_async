@@ -1,6 +1,10 @@
 require "test_helper"
 
 class SaveTest < ActiveJob::TestCase
+  setup do
+    User.destroy_all
+  end
+
   test "save_async 1" do
     user = User.create(name: "John Doe")
     assert_enqueued_jobs 0
