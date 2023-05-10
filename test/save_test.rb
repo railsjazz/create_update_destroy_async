@@ -2,7 +2,7 @@ require "test_helper"
 
 class SaveTest < ActiveJob::TestCase
   setup do
-    User.destroy_all
+    clear_db
   end
 
   test "save_async 1" do
@@ -32,5 +32,16 @@ class SaveTest < ActiveJob::TestCase
     end
     assert_equal "NEW", User.first.name
     assert_equal 43, User.first.age
+  end
+
+  test "save_async 4" do
+    user1 = User.create(name: "OLD")
+    user2 = User.create(name: "NEW")
+    project = user1.projects.create(title: "OLD")
+    perform_enqueued_jobs do
+      project.user = user2
+      project.save_async
+    end
+    assert_equal user2, project.reload.user
   end
 end

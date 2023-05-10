@@ -2,7 +2,7 @@ require "test_helper"
 
 class CreateUpdateDestroyAsyncTest < ActiveJob::TestCase
   setup do
-    User.destroy_all
+    clear_db
   end
 
   test "create_async 1" do
@@ -17,5 +17,18 @@ class CreateUpdateDestroyAsyncTest < ActiveJob::TestCase
       User.create_async(name: "John Doe")
     end
     assert_equal 1, User.count
+  end
+
+  test "create_async 3" do
+    assert_nothing_raised do
+      User.create_async
+    end
+  end
+
+  test "create_async 4" do
+    perform_enqueued_jobs do
+      User.create.projects.create_async
+    end
+    assert_equal 1, Project.count
   end
 end

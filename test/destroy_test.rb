@@ -2,7 +2,7 @@ require "test_helper"
 
 class DestroyTest < ActiveJob::TestCase
   setup do
-    User.destroy_all
+    clear_db
   end
 
   test "destroy_async 1" do

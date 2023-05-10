@@ -30,4 +30,16 @@ class UpdateTest < ActiveJob::TestCase
     assert_equal "Bob Smith", User.first.name
     assert_equal 42, User.first.age
   end
+
+  test "update_async 4" do
+    a = User.create(name: "A")
+    b = User.create(name: "B")
+    p = a.projects.create(title: "P")
+
+    perform_enqueued_jobs do
+      p.update_async(user: b)
+    end
+
+    assert_equal b, p.reload.user
+  end
 end
