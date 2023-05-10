@@ -39,14 +39,14 @@ class EventsAPIController < AppController
   def show
     @event = Event.find(params[:id])
 
-    EventView.create_async(user: current_user) # <--- in this line we have a change
+    EventView.create_async(user: current_user) # <--- here is a change
 
     render json: @event
   end
 end
 ```
 
-When we call `create_async`, it will start a new background job and create new record in the background.
+When we call `.create_async`, it will start a new background job and create new record in the background.
 
 ## Usage
 
@@ -86,7 +86,7 @@ Ideal use case - when you just need to do an atomic action that won't require an
     if @user.save_async
       ... # this won't work as expected
     else
-      ... # sorry validation happens in the background
+      ... # sorry validation happens only in the background
     end
   ```
 - you cannot refer variables in your code, because they will be created in the background. Example:
@@ -106,6 +106,13 @@ gem "create_update_destroy_async"
 And then execute:
 ```bash
 $ bundle
+```
+
+## TODO
+
+- how to set queue where it will be executed
+- verify if it works on not with more complext objects, like accept nested attributes
+- options for jobs, like discard_on, priority, etc
 
 ## Contributing
 
@@ -114,7 +121,6 @@ You are welcome to contribute.
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
-
 
 [<img src="https://github.com/igorkasyanchuk/rails_time_travel/blob/main/docs/more_gems.png?raw=true"
 />](https://www.railsjazz.com/?utm_source=github&utm_medium=bottom&utm_campaign=create_update_destroy_async)
