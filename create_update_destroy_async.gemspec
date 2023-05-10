@@ -6,8 +6,8 @@ Gem::Specification.new do |spec|
   spec.authors     = ["Igor Kasyanchuk", "Liubomyr Manastyretskyi"]
   spec.email       = ["igorkasyanchuk@gmail.com", "manastyretskyi@gmail.com"]
   spec.homepage    = "https://github.com/railsjazz/create_update_destroy_async"
-  spec.summary     = "Summary of CreateUpdateDestroyAsync."
-  spec.description = "Description of CreateUpdateDestroyAsync."
+  spec.summary     = "Execute create/update/destroy operations asynchronously in your Rails app"
+  spec.description = "Execute create/update/destroy operations asynchronously in your Rails app"
   spec.license     = "MIT"
 
   spec.metadata["homepage_uri"] = spec.homepage
