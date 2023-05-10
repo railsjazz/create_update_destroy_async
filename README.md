@@ -4,10 +4,12 @@
 [![Listed on OpenSource-Heroes.com](https://opensource-heroes.com/badge-v1.svg)](https://opensource-heroes.com/o/railsjazz)
 
 A very simple solution for a very simple but annoying problem.
-
 An example of problem that this gem solves.
 
 ```ruby
+#
+# code that can be improved
+#
 class EventsAPIController < AppController
   def show
     @event = Event.find(params[:id])
@@ -20,20 +22,19 @@ end
 ```
 
 How code above can be improved (and by improved I mean faster)?
-
 This API endpoint is responsible to return JSON info about Event.
 
 What in this code can slowdown this API?
-
 Probably this: `EventView.create(user: current_user)`? This is the only one write operation that we have.
 
 Now, imagine that in our app we have background jobs. We can create a new Job create event in background.
-
 But what could be even simpler? Correct answer is to use this gem :)
-
 With help of this gem you can rewrite your code to this:
 
 ```ruby
+#
+# improved version, it will work 100% faster
+#
 class EventsAPIController < AppController
   def show
     @event = Event.find(params[:id])
@@ -56,26 +57,6 @@ You have methods like:
 - `.update_async`
 - `.destroy_async`
 
-Ideal use case - when you just need to do an atomic action that won't require any logic with object.
-
-Limitations:
-
-- you need to have some background job service in your app (as far I remember Sidekiq can be started within your app)
-- maybe it won't work with complex associations that are changed in the object (not tested)
-- validations will happen in the background, so you cannot write code like:
-  ```ruby
-    if @user.save_async
-      ... # this won't work as expected
-    else
-      ... # sorry validation happens in the background
-    end
-  ```
-- you cannot refer variables in your code, because they will be created in the background. Example:
-  ```ruby
-    @user = User.create_async(attrs)
-    puts @user.full_name # this code won't work
-  ```
-
 ## Examples
 
 ```ruby
@@ -93,6 +74,26 @@ User.create_async(first_name: "John", last_name: "Smith")
 # destroy
 @user.destroy_async
 ```
+
+Ideal use case - when you just need to do an atomic action that won't require any logic with object.
+
+## Limitations:
+
+- you need to have some background job service in your app (as far I remember Sidekiq can be started within your app)
+- maybe it won't work with complex associations that are changed in the object (not tested)
+- validations will happen in the background, so you cannot write code like:
+  ```ruby
+    if @user.save_async
+      ... # this won't work as expected
+    else
+      ... # sorry validation happens in the background
+    end
+  ```
+- you cannot refer variables in your code, because they will be created in the background. Example:
+  ```ruby
+    @user = User.create_async(attrs)
+    puts @user.full_name # this code won't work
+  ```
 
 ## Installation
 
