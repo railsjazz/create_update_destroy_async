@@ -17,6 +17,7 @@ class EventsAPIController < AppController
   def show
     @event = Event.find(params[:id])
 
+    # scroll down to see how we can improve this line
     EventView.create(user: current_user)
 
     render json: @event
@@ -30,7 +31,7 @@ This API endpoint is responsible to return JSON info about Event.
 What in this code can slowdown this API?
 Probably this: `EventView.create(user: current_user)`? This is the only one write operation that we have.
 
-Now, imagine that in our app we have background jobs. We can create a new Job create event in background.
+Now, imagine that in our app we have background jobs. We can start a new background job to create event in async mode.
 But what could be even simpler? Correct answer is to use this gem :)
 With help of this gem you can rewrite your code to this:
 
