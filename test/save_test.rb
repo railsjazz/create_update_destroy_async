@@ -44,4 +44,12 @@ class SaveTest < ActiveJob::TestCase
     end
     assert_equal user2, project.reload.user
   end
+
+  test "sets custom queue" do
+    user = User.create(name: "John Doe")
+    user.name = "Bob Smith"
+    user.save_async(queue: "test")
+
+    assert_enqueued_with(job: CreateUpdateDestroyAsync::Jobs::Save, queue: "test")
+  end
 end

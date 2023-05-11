@@ -43,7 +43,7 @@ class EventsAPIController < AppController
   def show
     @event = Event.find(params[:id])
 
-    EventView.create_async(user: current_user) # <--- here is a change
+    EventView.create_async({ user: current_user }) # <--- here is a change
 
     render json: @event
   end
@@ -61,15 +61,17 @@ You have methods like:
 - `.update_async`
 - `.destroy_async`
 
+If you want to set specific queue you can use argument `queue: :queue_name`
+
 ## Examples
 
 ```ruby
 
 # create
-User.create_async(first_name: "John", last_name: "Smith")
+User.create_async({ first_name: "John", last_name: "Smith" })
 
 # update
-@user.update_async(first_name: "New Name")
+@user.update_async({ first_name: "New Name" })
 
 # save
 @user.first_name = "New Name"
@@ -77,6 +79,9 @@ User.create_async(first_name: "John", last_name: "Smith")
 
 # destroy
 @user.destroy_async
+
+# create in speicific queue
+User.create_async({ first_name: "John", last_name: "Smith" }, queue: :queue_name)
 ```
 
 Ideal use case - when you just need to do an atomic action that won't require any logic with object.
@@ -114,8 +119,8 @@ $ bundle
 
 ## TODO
 
-- how to set queue where it will be executed
-- verify if it works on not with more complext objects, like accept nested attributes
+- ~~how to set queue where it will be executed~~
+- verify if it works or not with more complext objects, like accept nested attributes
 - options for jobs, like discard_on, priority, etc
 
 ## Benchmark

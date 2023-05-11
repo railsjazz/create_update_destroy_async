@@ -20,4 +20,11 @@ class DestroyTest < ActiveJob::TestCase
     end
     assert_equal 0, User.count
   end
+
+  test "sets custom queue" do
+    user = User.create(name: "John Doe")
+    user.destroy_async(queue: :test)
+
+    assert_enqueued_with(job: CreateUpdateDestroyAsync::Jobs::Destroy, queue: "test")
+  end
 end

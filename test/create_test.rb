@@ -7,14 +7,14 @@ class CreateUpdateDestroyAsyncTest < ActiveJob::TestCase
 
   test "create_async 1" do
     assert_enqueued_jobs 0
-    User.create_async(name: "John Doe")
+    User.create_async({ name: "John Doe" })
     assert_equal 0, User.count
     assert_enqueued_jobs 1
   end
 
   test "create_async 2" do
     perform_enqueued_jobs do
-      User.create_async(name: "John Doe")
+      User.create_async({ name: "John Doe" })
     end
     assert_equal 1, User.count
   end
@@ -30,6 +30,12 @@ class CreateUpdateDestroyAsyncTest < ActiveJob::TestCase
       User.create.projects.create_async
     end
     assert_equal 1, Project.count
+  end
+
+  test "sets custom queue" do
+    User.create_async({ name: "John Doe" }, queue: "test")
+
+    assert_enqueued_with(job: CreateUpdateDestroyAsync::Jobs::Create, queue: "test")
   end
 
   test "job name" do
@@ -50,7 +56,7 @@ class CreateUpdateDestroyAsyncTest < ActiveJob::TestCase
     # Clear the enqueued jobs before testing
     ActiveJob::Base.queue_adapter.enqueued_jobs.clear
 
-    User.create_async(name: "John Doe")
+    User.create_async({ name: "John Doe" })
 
     # Check if the job was enqueued
     assert_enqueued_jobs 1
