@@ -3,6 +3,9 @@
 [![RailsJazz](https://github.com/igorkasyanchuk/rails_time_travel/blob/main/docs/my_other.svg?raw=true)](https://www.railsjazz.com)
 [![Listed on OpenSource-Heroes.com](https://opensource-heroes.com/badge-v1.svg)](https://opensource-heroes.com/o/railsjazz)
 
+A simple benchmark to grab your attention. Performance difference is noticeable.
+![Performance](docs/benchmark_example.png)
+
 A very simple solution for a very simple but annoying problem.
 An example of problem that this gem solves.
 
@@ -113,6 +116,15 @@ $ bundle
 - how to set queue where it will be executed
 - verify if it works on not with more complext objects, like accept nested attributes
 - options for jobs, like discard_on, priority, etc
+
+## Benchmark
+
+- `rails s -e production`
+- `wrk -c100 http://127.0.0.1:3000/home/index1`
+- stop server
+- `rails s -e production`
+- `wrk -c100 http://127.0.0.1:3000/home/index2`
+- repeat few times to be 100% sure
 
 ## Contributing
 

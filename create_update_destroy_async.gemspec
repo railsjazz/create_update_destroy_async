@@ -19,4 +19,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "rails"
   spec.add_dependency "activejob"
   spec.add_development_dependency "pry"
+  spec.add_development_dependency "sidekiq"
 end

@@ -76,6 +76,7 @@ GEM
     builder (3.2.4)
     coderay (1.1.3)
     concurrent-ruby (1.2.2)
+    connection_pool (2.4.0)
     crass (1.0.6)
     date (3.3.3)
     erubi (1.12.0)
@@ -107,9 +108,12 @@ GEM
     nio4r (2.5.9)
     nokogiri (1.14.3-x86_64-darwin)
       racc (~> 1.4)
+    pg (1.5.3)
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
+    puma (6.2.2)
+      nio4r (~> 2.0)
     racc (1.6.2)
     rack (2.2.7)
     rack-test (2.1.0)
@@ -141,7 +145,13 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rake (13.0.6)
-    sqlite3 (1.6.2-x86_64-darwin)
+    redis-client (0.14.1)
+      connection_pool
+    sidekiq (7.1.0)
+      concurrent-ruby (< 2)
+      connection_pool (>= 2.3.0)
+      rack (>= 2.2.4)
+      redis-client (>= 0.14.0)
     thor (1.2.1)
     timeout (0.3.2)
     tzinfo (2.0.6)
@@ -156,8 +166,10 @@ PLATFORMS
 
 DEPENDENCIES
   create_update_destroy_async!
+  pg
   pry
-  sqlite3
+  puma
+  sidekiq
 
 BUNDLED WITH
    2.4.10
