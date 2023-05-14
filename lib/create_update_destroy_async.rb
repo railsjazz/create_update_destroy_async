@@ -1,4 +1,5 @@
 require "create_update_destroy_async/version"
+require "create_update_destroy_async/jobs/base"
 require "create_update_destroy_async/jobs/create"
 require "create_update_destroy_async/jobs/save"
 require "create_update_destroy_async/jobs/update"

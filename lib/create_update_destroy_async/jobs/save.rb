@@ -2,7 +2,7 @@
 
 module CreateUpdateDestroyAsync
   module Jobs
-    class Save < ActiveJob::Base
+    class Save < Base
       def perform(record, attributes = {})
         record.assign_attributes(attributes)
         record.save

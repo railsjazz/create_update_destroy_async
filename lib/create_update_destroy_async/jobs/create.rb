@@ -2,7 +2,7 @@
 
 module CreateUpdateDestroyAsync
   module Jobs
-    class Create < ActiveJob::Base
+    class Create < Base
       def perform(klass, attributes = {})
         model = klass.constantize
         model.create(attributes)

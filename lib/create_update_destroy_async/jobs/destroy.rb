@@ -2,7 +2,7 @@
 
 module CreateUpdateDestroyAsync
   module Jobs
-    class Destroy < ActiveJob::Base
+    class Destroy < Base
       def perform(record)
         record.destroy
       end

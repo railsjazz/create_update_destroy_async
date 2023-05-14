@@ -127,6 +127,12 @@ $ bundle
 - `wrk -c100 http://127.0.0.1:3000/home/index2`
 - repeat few times to be 100% sure
 
+## Development
+
+You can start rails s in dummy app, and open http://localhost:3000/home/index1 and http://localhost:3000/home/index2.
+
+In addition you need to start Sidekiq in the background.
+
 ## Contributing
 
 You are welcome to contribute.
