@@ -135,6 +135,9 @@ In addition you need to start Sidekiq in the background.
 
 ## Contributing
 
+[<img src="https://opensource-heroes.com/svg/embed/railsjazz/create_update_destroy_async"
+/>](https://opensource-heroes.com/r/railsjazz/create_update_destroy_async)
+
 You are welcome to contribute.
 
 ## License
